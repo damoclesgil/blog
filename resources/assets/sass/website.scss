@@ -1,0 +1,13 @@
+// Bootstrap && "~" -> significa node_modules
+@import '~bootstrap/scss/bootstrap';
+
+// Components
+@import "website/components/footer";
+@import "website/components/header";
+
+// Helpers
+
+// pages
+@import "website/pages/about";
+@import "website/pages/contact";
+@import "website/pages/home";

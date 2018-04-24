@@ -17,6 +17,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6">
+				@include('partials.messages')
 					<h2>Formulário</h2>
 					<hr>
 					<form action="" method="POST">
@@ -31,7 +32,7 @@
 							<input type="text" class="form-control" name="phone" placeholder="Telefone">
 						</div>
 						<div class="form-group">
-							<textarea name="message" cols="30" rows="10" class="form-control"></textarea>
+							<textarea name="bodyMessage" cols="30" rows="10" class="form-control"></textarea>
 						</div>
 						<div class="form-group">
 							<input type="submit" value="Enviar" class="btn btn-success">
