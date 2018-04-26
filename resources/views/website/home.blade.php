@@ -4,11 +4,12 @@
 
 @section('content')
 
-<header class="masthead">
+{{-- <header class="masthead">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <h1>Slider principal</h1>
+				<h1>Slider principal</h1>
+				<input type="text">
       </div>
     </div>
   </div>
@@ -45,13 +46,17 @@
       </div>
     </div>
   </div>
-</section>
+</section> --}}
+
+<div id="app">
+	mounted()
+</div>
 
 @endsection
 
 @section('scripts')
-
-  <script>
+<script src="js/app.js"></script>
+ <script>
     console.log('script home')
   </script>
 
