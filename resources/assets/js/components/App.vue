@@ -1,85 +1,50 @@
-
 <template>
   <div class="corpo">
-    <h1 class="centralizado">{{ titulo }}</h1>
 
-    <input type="search" class="filtro" @input="filtro = $event.target.value" placeholder="filtre pelo título da foto">
+    <meu-menu :rotas="routes"/>
 
-    <ul class="lista-fotos">
-      <li class="lista-fotos-item" v-for="foto of fotosComFiltro">
-        <meu-painel :titulo="foto.titulo">
-          <imagem-responsiva :url="foto.url" :titulo="foto.titulo"/>
-        </meu-painel>
-      </li>
-    </ul>
-
+    <transition name="pagina">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
+
 <script>
-import Painel from "./shared/painel/Painel.vue";
-import ImagemResponsiva from "./shared/imagem-responsiva/ImagemResponsiva.vue";
+
+import { routes } from '../routes';
+import Menu from './shared/menu/Menu.vue';
 
 export default {
+
   components: {
-    "meu-painel": Painel,
-    "imagem-responsiva": ImagemResponsiva
+    'meu-menu' : Menu
   },
 
   data() {
+
     return {
-      titulo: "Fórum",
-      fotos: [],
-      filtro: ""
-    };
-  },
 
-  computed: {
-    fotosComFiltro() {
-      if (this.filtro) {
-        let exp = new RegExp(this.filtro.trim(), "i");
-        // filtra a lista, por eqnaunto vamos retornar uma lista em branco
-        return this.fotos.filter(foto => exp.test(foto.titulo));
-      } else {
-        // se o campo estiver vazio, não filtramos, retornamos a lista
-        return this.fotos;
-      }
+      routes
     }
-  },
-
-  created() {
-    this.$http
-      .get("http://localhost:3000/v1/fotos")
-      .then(res => res.json())
-      .then(fotos => (this.fotos = fotos), err => console.log(err));
   }
-};
+}
 </script>
 
 <style>
-.centralizado {
-  text-align: center;
-}
+  .corpo {
+    font-family: Helvetica, sans-serif;
+    width: 96%;
+    margin: 0 auto;
+  }
 
-.corpo {
-  font-family: Helvetica, sans-serif;
-  margin: 10% auto;
-  width: 96%;
-}
+ .pagina-enter, .pagina-leave-active {
 
-.lista-fotos {
-  list-style: none;
-}
+     opacity: 0;
+ }
 
-.lista-fotos .lista-fotos-item {
-  display: inline-block;
-}
+ .pagina-enter-active, .pagina-leave-active {
 
-.imagem-responsiva {
-  width: 100%;
-}
+     transition: opacity .4s;
+ }
 
-.filtro {
-  display: block;
-  width: 100%;
-}
 </style>
