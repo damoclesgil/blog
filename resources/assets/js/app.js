@@ -1,13 +1,16 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+import Vue from 'vue'
+import App from './components/App.vue'
+import VueResource from 'vue-resource';
 
 require('./bootstrap');
 
 window.Vue = require('vue');
+Vue.use(VueResource);
 
 
 Vue.config.devtools = true;
@@ -19,15 +22,9 @@ Vue.config.performance = true;
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('app', require('./components/App.vue'));
-import App from './components/App.vue';
+// Vue.component('artigo', require('./components/Artigo.vue'));
 
-const app = new Vue({
-		el: '#app',
-
-		components: {
-			App
-		},
-		render: h => h(App)
+new Vue({
+	el: '#app',
+	render: h => h(App)
 });

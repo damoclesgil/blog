@@ -4,7 +4,11 @@
 
 @section('content')
 
-{{-- <header class="masthead">
+
+<div id="app"></div>
+
+
+ {{-- <header class="masthead">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -48,16 +52,13 @@
   </div>
 </section> --}}
 
-<div id="app">
-	mounted()
-</div>
-
 @endsection
 
-@section('scripts')
-<script src="js/app.js"></script>
- <script>
-    console.log('script home')
-  </script>
 
+@section('scripts')
+<script src="{{ asset('js/app.js') }}"></script>
+<script>
+
+
+</script>
 @endsection

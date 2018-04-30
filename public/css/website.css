@@ -10419,6 +10419,12 @@ a.text-dark:focus {
   padding-bottom: 50px;
 }
 
+.respira {
+  padding: 130px 0px;
+  background-color: #ccc;
+  text-align: center;
+}
+
 .masthead {
   padding-top: 150px;
   background-color: #ccc;
