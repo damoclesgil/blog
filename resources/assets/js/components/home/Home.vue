@@ -1,19 +1,18 @@
 <template>
 	<div>
 		<h1 class="centralizado">{{ titulo }}</h1>
+		<p v-show="mensagem" class="centralizado">{{ mensagem }}</p>
 		<input type="search" class="filtro" @input="filtro = $event.target.value" placeholder="filtre por parte do título">
 		<ul class="lista-fotos">
 			<li class="lista-fotos-item" v-for="foto in fotosComFiltro">
 				<meu-painel :titulo="foto.titulo">
-					<imagem-responsiva :url="foto.url" :titulo="foto.titulo" v-meu-transform:rotate.animate="15"/>
-					<!-- passando foto como parâmetro do método remove do componente Home -->
-						<meu-botao
-							rotulo="remover"
-							tipo="button"
-							:confirmacao="true"
-							@botaoAtivado="remove(foto)"
-							estilo="perigo"/>
+					<imagem-responsiva :url="foto.url" :titulo="foto.titulo" v-meu-transform:rotate.animate="15" />
 
+					<router-link :to="{ name: 'altera', params: { id : foto._id }}">
+						<meu-botao rotulo="alterar" tipo="button" />
+					</router-link>
+
+					<meu-botao rotulo="remover" tipo="button" :confirmacao="true" @botaoAtivado="remove(foto)" estilo="perigo" />
 				</meu-painel>
 			</li>
 		</ul>
@@ -24,6 +23,8 @@
 import Painel from "../shared/painel/Painel.vue";
 import ImagemResponsiva from "../shared/imagem-responsiva/ImagemResponsiva.vue";
 import Botao from "../shared/botao/Botao.vue";
+import FotoService from "../../domain/foto/fotoService";
+
 export default {
   components: {
     "meu-painel": Painel,
@@ -33,10 +34,22 @@ export default {
 
   data() {
     return {
-      titulo: "Fórum",
+      titulo: "Fórum de Notícias",
       fotos: [],
-      filtro: ""
+      filtro: "",
+      mensagem: ""
     };
+  },
+  created() {
+    // criando uma instância do nosso serviço que depende de $resource
+    this.service = new FotoService(this.$resource);
+
+    this.service
+      .lista()
+      .then(
+        fotos => (this.fotos = fotos),
+        err => (this.mensagem = err.message)
+      );
   },
 
   computed: {
@@ -52,15 +65,12 @@ export default {
 
   methods: {
     remove(foto) {
-      alert(foto.titulo);
+      this.service.apaga(foto._id).then(() => {
+        let indice = this.fotos.indexOf(foto);
+        this.fotos.splice(indice, 1);
+        this.mensagem = "Foto removida com sucesso";
+      }, err => (this.mensagem = err.message));
     }
-  },
-
-  created() {
-    this.$http
-      .get("http://localhost:3000/v1/fotos")
-      .then(res => res.json())
-      .then(fotos => (this.fotos = fotos), err => console.log(err));
   }
 };
 </script>
